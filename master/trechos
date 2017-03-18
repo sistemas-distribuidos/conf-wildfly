@@ -1,0 +1,15 @@
+/opt/wildfly/domain/configuration/domain.xml
+
+<server-groups>
+    <server-group name="arquitetura" profile="full-ha">
+            <jvm name="default">
+                    <heap size="64m" max-size="512m"/>
+            </jvm>
+            <socket-binding-group ref="full-ha-sockets"/>
+    </server-group>
+</server-groups>
+
+
+<subsystem xmlns="urn:jboss:domain:messaging-activemq:1.0">
+                <server name="default">
+                    <cluster password="${jboss.messaging.cluster.password:unirn}"/>

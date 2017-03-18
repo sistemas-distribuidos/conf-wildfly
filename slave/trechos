@@ -1,0 +1,32 @@
+/opt/wildfly/domain/configuration/host-slave.xml
+
+# Inclua o name
+<host name="slave"
+
+# Altere o secret para o valor gerado no master.
+<server-identities>
+    <!-- Replace this with either a base64 password of your own, or use a vault with a vault expression -->
+    <secret value="dW5pcm4="/>
+</server-identities>
+
+# Adicione os 2 slaves
+<servers>
+    <server name="slave1" group="arquitetura"/>
+    <server name="slave2" group="arquitetura">
+        <socket-bindings port-offset="150"/>
+    </server>
+</servers>
+
+#Adicione a ref. ao master
+<domain-controller>
+   <remote host="${jboss.domain.master.address}" username="aluno" port="${jboss.domain.master.port:9999}" security-realm="ManagementRealm"/>
+</domain-controller>
+
+/opt/wildfly/domain/configuration/domain.xml
+<subsystem xmlns="urn:jboss:domain:modcluster:2.0">
+    <mod-cluster-config advertise-socket="modcluster" proxies="192.168.1.112:8080" advertise="false" sticky-session="true" load-balancing-group="arquitetura" connector="ajp">
+        <dynamic-load-provider>
+            <load-metric type="cpu"/>
+        </dynamic-load-provider>
+    </mod-cluster-config>
+</subsystem>
