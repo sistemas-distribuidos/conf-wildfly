@@ -13,3 +13,17 @@
 <subsystem xmlns="urn:jboss:domain:messaging-activemq:1.0">
                 <server name="default">
                     <cluster password="${jboss.messaging.cluster.password:unirn}"/>
+
+
+<subsystem xmlns="urn:jboss:domain:modcluster:2.0">
+    <mod-cluster-config advertise-socket="modcluster" proxies="apache1" advertise="false" sticky-session="true" load-balancing-group="arquitetura" connector="ajp">
+        <dynamic-load-provider>
+            <load-metric type="cpu"/>
+        </dynamic-load-provider>
+    </mod-cluster-config>
+</subsystem>
+
+
+<outbound-socket-binding name="apache1">
+    <remote-destination host="192.168.1.112" port="8080"/>
+</outbound-socket-binding>
